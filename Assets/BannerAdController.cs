@@ -1,44 +1,25 @@
 using System;
 using UnityEngine;
-using UnityEngine.UI;
 using GoogleMobileAds.Api;
 
-public class AdManager : MonoBehaviour
+public class BannerAdController : MonoBehaviour
 {
+    // This ad unit is configured to always serve test banner ads for android.
+    private string androidAppId = "ca-app-pub-3212738706492790/6113697308";
     private BannerView bannerView;
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        // Initialize Google Mobile Ads SDK
-        MobileAds.Initialize(initStatus => { });
-
-        this.RequestBanner(AdPosition.Top, 100);
-    }
 
     private void RequestBanner(AdPosition position, int width = 0)
     {
-        // These ad units are configured to always serve test ads.
-        #if UNITY_EDITOR
-            string adUnitId = "unused";
-        #elif UNITY_ANDROID
-            string adUnitId = "ca-app-pub-3212738706492790/6113697308";
-        #elif UNITY_IPHONE
-            string adUnitId = "ca-app-pub-3212738706492790/5381898163";
-        #else
-            string adUnitId = "unexpected_platform";
-        #endif
-
         // Clean up previous banner before creating a new one to avoid memory leak
         if (bannerView != null)
             bannerView.Destroy();
 
         // create an adaptive size based on screen size
         //AdSize fullWidthSize = AdSize.GetCurrentOrientationAnchoredAdaptiveBannerAdSizeWithWidth(AdSize.FullWidth);
-        
+
         // calculate bannerWidth if width parameter is specified
         AdSize bannerSize = AdSize.GetCurrentOrientationAnchoredAdaptiveBannerAdSizeWithWidth(width);
-        bannerView = new BannerView(adUnitId, bannerSize, position);
+        bannerView = new BannerView(androidAppId, bannerSize, position);
 
         // Register ad events
         bannerView.OnAdLoaded += HandleAdLoaded;
@@ -52,7 +33,8 @@ public class AdManager : MonoBehaviour
         // load banner using request
         bannerView.LoadAd(request);
     }
-
+    
+    // This function is attached and called when certain buttons are pressed
     public void HandleToggleBanner(int position)
     {
         // AdPosition values
@@ -74,23 +56,26 @@ public class AdManager : MonoBehaviour
         }
     }
 
+    #region Banner callback handlers
     public void HandleAdLoaded(object sender, EventArgs args)
     {
-        Debug.Log("Ad Loaded");
+        Debug.Log("Banner Ad Loaded");
     }
 
-    public void HandleAdFailedToLoad(object sender, EventArgs args)
+    public void HandleAdFailedToLoad(object sender, AdFailedToLoadEventArgs args)
     {
-        Debug.Log("Ad Load Failed");
+        Debug.Log("Banner Ad Load Failed:" + args.LoadAdError.GetMessage());
     }
 
     public void HandleAdOpening(object sender, EventArgs args)
     {
-        Debug.Log("Ad Clicked");
+        Debug.Log("Banner Ad Clicked");
     }
 
     public void HandleAdClosed(object sender, EventArgs args)
     {
-        Debug.Log("Ad Closed");
+        Debug.Log("Banner Ad Closed");
     }
+
+    #endregion
 }
