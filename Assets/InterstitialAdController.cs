@@ -65,11 +65,8 @@ public class InterstitialAdController : MonoBehaviour
     {
         Debug.Log("Interstitial Ad Closed");
 
-        // Clean up ad after closing to avoid memory leak
-        interstitialAd.Destroy();
-
-        // Preload another ad after 3 seconds
-        Invoke("RequestInterstitial", 3);
+        // Preload another ad
+        RequestInterstitial();
     }
 
     #endregion
