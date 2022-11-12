@@ -4,8 +4,6 @@ using GoogleMobileAds.Api;
 
 public class InterstitialAdController : MonoBehaviour
 {
-    // This ad unit is configured to always serve test banner ads for android.
-    private string androidAppId = "ca-app-pub-3212738706492790/6113697308";
     private InterstitialAd interstitialAd;
 
     private void Start()
@@ -16,12 +14,21 @@ public class InterstitialAdController : MonoBehaviour
 
     private void RequestInterstitial()
     {
+        // These units are configured to always serve test interstitial ads for android and ios respectively.
+#if UNITY_ANDROID
+        string adUnitId = "ca-app-pub-3940256099942544/1033173712";
+#elif UNITY_IOS
+        string adUnitId = "ca-app-pub-3940256099942544/4411468910";
+#else
+        string adUnitId = "unexpected_platform"
+#endif
+
         // Clean up previous ad before creating a new one to avoid memory leak
         if (interstitialAd != null)
             interstitialAd.Destroy();
 
         // Initialize interstitial ad
-        interstitialAd = new InterstitialAd(androidAppId);
+        interstitialAd = new InterstitialAd(adUnitId);
 
         // Register ad events
         interstitialAd.OnAdLoaded += HandleAdLoaded;

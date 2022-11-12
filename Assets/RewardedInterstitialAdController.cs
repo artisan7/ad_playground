@@ -4,8 +4,6 @@ using GoogleMobileAds.Api;
 
 public class RewardedInterstitialAdController : MonoBehaviour
 {
-    // This ad unit is configured to always serve test banner ads for android.
-    private string androidAppId = "ca-app-pub-3940256099942544/5224354917";
     private RewardedInterstitialAd rewardedInterstitialAd;
 
     private void Start()
@@ -16,6 +14,15 @@ public class RewardedInterstitialAdController : MonoBehaviour
 
     private void RequestRewardedInterstitial()
     {
+        // These units are configured to always serve test rewarded interstitial ads for android and ios respectively.
+#if UNITY_ANDROID
+        string adUnitId = "ca-app-pub-3940256099942544/5354046379";
+#elif UNITY_IOS
+        string adUnitId = "ca-app-pub-3940256099942544/6978759866";
+#else
+        string adUnitId = "unexpected_platform"
+#endif
+
         // Clean up previous ad before creating a new one to avoid memory leak
         if (rewardedInterstitialAd != null)
             rewardedInterstitialAd.Destroy();
@@ -24,7 +31,7 @@ public class RewardedInterstitialAdController : MonoBehaviour
         AdRequest request = new AdRequest.Builder().Build();
 
         // load rewarded ad using request
-        RewardedInterstitialAd.LoadAd(androidAppId, request, HandleAdLoaded);
+        RewardedInterstitialAd.LoadAd(adUnitId, request, HandleAdLoaded);
     }
 
     // This function is attached and called when certain buttons are pressed

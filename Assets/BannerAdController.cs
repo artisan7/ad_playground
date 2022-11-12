@@ -4,12 +4,20 @@ using GoogleMobileAds.Api;
 
 public class BannerAdController : MonoBehaviour
 {
-    // This ad unit is configured to always serve test banner ads for android.
-    private string androidAppId = "ca-app-pub-3212738706492790/6113697308";
     private BannerView bannerView;
 
     private void RequestBanner(AdPosition position, int width = 0)
     {
+        // These units are configured to always serve test banner ads for android and ios respectively.
+#if UNITY_ANDROID
+        string adUnitId = "ca-app-pub-3940256099942544/6300978111";
+#elif UNITY_IOS
+        string adUnitId = "ca-app-pub-3940256099942544/4411468910";
+#else
+        string adUnitId = "unexpected_platform"
+#endif
+
+
         // Clean up previous banner before creating a new one to avoid memory leak
         if (bannerView != null)
             bannerView.Destroy();
@@ -19,7 +27,7 @@ public class BannerAdController : MonoBehaviour
 
         // calculate bannerWidth if width parameter is specified
         AdSize bannerSize = AdSize.GetCurrentOrientationAnchoredAdaptiveBannerAdSizeWithWidth(width);
-        bannerView = new BannerView(androidAppId, bannerSize, position);
+        bannerView = new BannerView(adUnitId, bannerSize, position);
 
         // Register ad events
         bannerView.OnAdLoaded += HandleAdLoaded;
@@ -56,7 +64,7 @@ public class BannerAdController : MonoBehaviour
         }
     }
 
-    #region Banner callback handlers
+#region Banner callback handlers
     public void HandleAdLoaded(object sender, EventArgs args)
     {
         Debug.Log("Banner Ad Loaded");
@@ -77,5 +85,5 @@ public class BannerAdController : MonoBehaviour
         Debug.Log("Banner Ad Closed");
     }
 
-    #endregion
+#endregion
 }

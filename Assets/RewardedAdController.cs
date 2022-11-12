@@ -4,8 +4,6 @@ using GoogleMobileAds.Api;
 
 public class RewardedAdController : MonoBehaviour
 {
-    // This ad unit is configured to always serve test banner ads for android.
-    private string androidAppId = "ca-app-pub-3940256099942544/5224354917";
     private RewardedAd rewardedAd;
 
     private void Start()
@@ -16,12 +14,21 @@ public class RewardedAdController : MonoBehaviour
 
     private void RequestRewarded()
     {
+        // These units are configured to always serve test rewarded ads for android and ios respectively.
+#if UNITY_ANDROID
+        string adUnitId = "ca-app-pub-3940256099942544/5224354917";
+#elif UNITY_IOS
+        string adUnitId = "ca-app-pub-3940256099942544/1712485313";
+#else
+        string adUnitId = "unexpected_platform"
+#endif
+
         // Clean up previous ad before creating a new one to avoid memory leak
         if (rewardedAd != null)
             rewardedAd.Destroy();
 
         // Initialize rewarded ad
-        rewardedAd = new RewardedAd(androidAppId);
+        rewardedAd = new RewardedAd(adUnitId);
 
         // Register ad events
         rewardedAd.OnAdLoaded += HandleAdLoaded;
