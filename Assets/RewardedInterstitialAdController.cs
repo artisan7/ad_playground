@@ -58,7 +58,7 @@ public class RewardedInterstitialAdController : MonoBehaviour
 
     public void HandleAdFailedToLoad(object sender, AdFailedToLoadEventArgs args)
     {
-        Debug.Log("Interstitial Rewarded Ad Load Failed:" + args.LoadAdError.GetMessage());
+        DebugTextArea.Instance.Log("Interstitial Rewarded Ad Load Failed:" + args.LoadAdError.GetMessage());
     }
 
     public void HandleAdOpening(object sender, EventArgs args)
@@ -68,7 +68,7 @@ public class RewardedInterstitialAdController : MonoBehaviour
 
     public void HandleAdFailedToShow(object sender, AdErrorEventArgs args)
     {
-        Debug.Log("Interstitial Rewarded Ad Failed To Show: " + args.AdError.GetMessage());
+        DebugTextArea.Instance.Log("Interstitial Rewarded Ad Failed To Show: " + args.AdError.GetMessage());
     }
 
     public void HandleAdClosed(object sender, EventArgs args)

@@ -60,7 +60,7 @@ public class RewardedAdController : MonoBehaviour
 
     public void HandleAdFailedToLoad(object sender, AdFailedToLoadEventArgs args)
     {
-        Debug.Log("Rewarded Ad Load Failed:" + args.LoadAdError.GetMessage());
+        DebugTextArea.Instance.Log("Rewarded Ad Load Failed:" + args.LoadAdError.GetMessage());
     }
 
     public void HandleAdOpening(object sender, EventArgs args)
@@ -70,7 +70,7 @@ public class RewardedAdController : MonoBehaviour
 
     public void HandleAdFailedToShow(object sender, AdErrorEventArgs args)
     {
-        Debug.Log("Rewarded Ad Failed To Show: " + args.AdError.GetMessage());
+        DebugTextArea.Instance.Log("Rewarded Ad Failed To Show: " + args.AdError.GetMessage());
     }
 
     public void HandleAdClosed(object sender, EventArgs args)
@@ -85,7 +85,7 @@ public class RewardedAdController : MonoBehaviour
     {
         string type = args.Type;
         double amount = args.Amount;
-        Debug.Log("User earned reward: " + amount.ToString() + " " + type);
+        DebugTextArea.Instance.Log("User earned reward: " + amount.ToString() + " " + type);
     }
 
     #endregion

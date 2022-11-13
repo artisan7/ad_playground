@@ -45,7 +45,7 @@ public class AppOpenAdController : MonoBehaviour
         if (state == AppState.Foreground && appOpenAd != null)
             appOpenAd.Show();
         else
-            Debug.Log("Please wait a few seconds for the Ad to Load.");
+            DebugTextArea.Instance.Log("Please wait a few seconds for the Ad to Load.");
     }
 
     // This function is attached to a button (used only to test on the editor)
@@ -55,7 +55,7 @@ public class AppOpenAdController : MonoBehaviour
         if (appOpenAd != null)
             appOpenAd.Show();
         else
-            Debug.Log("Please wait a few seconds for the Ad to Load.");
+            DebugTextArea.Instance.Log("Please wait a few seconds for the Ad to Load.");
     }
 
     #region Interstitial callback handlers
@@ -63,7 +63,7 @@ public class AppOpenAdController : MonoBehaviour
     {
         if (error != null)
         {
-            Debug.Log("App Open Ad Failed to Load: " + error.LoadAdError.GetMessage());
+            DebugTextArea.Instance.Log("App Open Ad Failed to Load: " + error.LoadAdError.GetMessage());
             return;
         }
 
@@ -78,7 +78,7 @@ public class AppOpenAdController : MonoBehaviour
 
     public void HandleAdFailedToOpen(object sender, AdErrorEventArgs args)
     {
-        Debug.Log("App Open Ad Load Failed:" + args.AdError.GetMessage());
+        DebugTextArea.Instance.Log("App Open Ad Load Failed:" + args.AdError.GetMessage());
     }
 
     public void HandleAdOpening(object sender, EventArgs args)

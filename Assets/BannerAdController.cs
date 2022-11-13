@@ -6,7 +6,7 @@ public class BannerAdController : MonoBehaviour
 {
     private BannerView bannerView;
 
-    private void RequestBanner(AdPosition position, int width = 0)
+    private void RequestBanner(AdPosition position)
     {
         // These units are configured to always serve test banner ads for android and ios respectively.
 #if UNITY_ANDROID
@@ -23,10 +23,10 @@ public class BannerAdController : MonoBehaviour
             bannerView.Destroy();
 
         // create an adaptive size based on screen size
-        //AdSize fullWidthSize = AdSize.GetCurrentOrientationAnchoredAdaptiveBannerAdSizeWithWidth(AdSize.FullWidth);
+        AdSize bannerSize = AdSize.GetCurrentOrientationAnchoredAdaptiveBannerAdSizeWithWidth(320);
 
         // calculate bannerWidth if width parameter is specified
-        AdSize bannerSize = AdSize.GetCurrentOrientationAnchoredAdaptiveBannerAdSizeWithWidth(width);
+        //AdSize bannerSize = AdSize.GetCurrentOrientationAnchoredAdaptiveBannerAdSizeWithWidth(width);
         bannerView = new BannerView(adUnitId, bannerSize, position);
 
         // Register ad events
@@ -60,7 +60,7 @@ public class BannerAdController : MonoBehaviour
         }
         else
         {
-            RequestBanner((AdPosition)position, 100);
+            RequestBanner((AdPosition)position);
         }
     }
 
@@ -72,7 +72,7 @@ public class BannerAdController : MonoBehaviour
 
     public void HandleAdFailedToLoad(object sender, AdFailedToLoadEventArgs args)
     {
-        Debug.Log("Banner Ad Load Failed:" + args.LoadAdError.GetMessage());
+        DebugTextArea.Instance.Log("Banner Ad Load Failed:" + args.LoadAdError.GetMessage());
     }
 
     public void HandleAdOpening(object sender, EventArgs args)

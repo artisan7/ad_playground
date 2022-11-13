@@ -49,7 +49,7 @@ public class InterstitialAdController : MonoBehaviour
         if (interstitialAd.IsLoaded())
             interstitialAd.Show();
         else
-            Debug.Log("Please wait a few seconds for the Ad to Load.");
+            DebugTextArea.Instance.Log("Please wait a few seconds for the Ad to Load.");
     }
 
     #region Interstitial callback handlers
@@ -60,7 +60,7 @@ public class InterstitialAdController : MonoBehaviour
 
     public void HandleAdFailedToLoad(object sender, AdFailedToLoadEventArgs args)
     {
-        Debug.Log("Interstitial Ad Load Failed:" + args.LoadAdError.GetMessage());
+        DebugTextArea.Instance.Log("Interstitial Ad Load Failed:" + args.LoadAdError.GetMessage());
     }
 
     public void HandleAdOpening(object sender, EventArgs args)
