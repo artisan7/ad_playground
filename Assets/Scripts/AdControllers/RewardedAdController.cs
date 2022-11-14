@@ -4,7 +4,7 @@ using GoogleMobileAds.Api;
 
 public class RewardedAdController : MonoBehaviour
 {
-    private RewardedAd rewardedAd;
+    public RewardedAd rewardedAd { get; private set; }
 
     private void Start()
     {
@@ -85,7 +85,7 @@ public class RewardedAdController : MonoBehaviour
     {
         string type = args.Type;
         double amount = args.Amount;
-        DebugTextArea.Instance.Log("User earned reward: " + amount.ToString() + " " + type);
+        Debug.Log("User earned reward: " + amount.ToString() + " " + type);
     }
 
     #endregion
