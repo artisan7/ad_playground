@@ -4,7 +4,7 @@ using GoogleMobileAds.Api;
 
 public class RewardedInterstitialAdController : MonoBehaviour
 {
-    private RewardedInterstitialAd rewardedInterstitialAd;
+    public RewardedInterstitialAd rewardedInterstitialAd { get; private set; }
 
     private void Start()
     {

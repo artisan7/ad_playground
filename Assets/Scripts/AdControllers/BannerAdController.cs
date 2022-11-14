@@ -4,7 +4,7 @@ using GoogleMobileAds.Api;
 
 public class BannerAdController : MonoBehaviour
 {
-    private BannerView bannerView;
+    public BannerView bannerView { get; private set; }
 
     private void RequestBanner(AdPosition position)
     {
@@ -40,6 +40,26 @@ public class BannerAdController : MonoBehaviour
 
         // load banner using request
         bannerView.LoadAd(request);
+    }
+
+    public void ShowBannerAd(bool show, int position = 0)
+    {
+        // AdPosition values
+        // Top = 0,
+        // Bottom = 1,
+        // TopLeft = 2,
+        // TopRight = 3,
+        // BottomLeft = 4,
+        // BottomRight = 5,
+        // Center = 6
+        if (!show || bannerView != null)
+        {
+            bannerView.Destroy();
+            bannerView = null;
+        }
+
+        if (show)
+            RequestBanner((AdPosition)position);
     }
     
     // This function is attached and called when certain buttons are pressed

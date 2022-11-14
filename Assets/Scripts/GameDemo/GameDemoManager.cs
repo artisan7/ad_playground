@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using TMPro;
 using GoogleMobileAds.Api;
 
@@ -11,12 +12,14 @@ public class GameDemoManager : MonoBehaviour
     public TMP_Text _scoreLabel;
 
     private RewardedAdController rewardedAdController;
+    private BannerAdController bannerAdController;
     private float _score;
 
     // Start is called before the first frame update
     void Start()
     {
         rewardedAdController = GetComponent<RewardedAdController>();
+        bannerAdController = GetComponent<BannerAdController>();
 
         _score = 0;
         VolleyBall.OnClickToPlay += GoToInGame;
@@ -24,6 +27,13 @@ public class GameDemoManager : MonoBehaviour
         VolleyBall.OnFallToBottom += GoToGameOver;
 
         GoToMainMenu();
+    }
+
+    private void OnDestroy()
+    {
+        VolleyBall.OnClickToPlay -= GoToInGame;
+        VolleyBall.OnVolley -= IncrementScore;
+        VolleyBall.OnFallToBottom -= GoToGameOver;
     }
 
     void IncrementScore()
@@ -61,6 +71,8 @@ public class GameDemoManager : MonoBehaviour
         _score = 0;
         UpdateScore();
         Time.timeScale = 0;
+
+        bannerAdController.ShowBannerAd(true, 1); // show bottom banner
     }
 
     void GoToInGame()
@@ -70,6 +82,8 @@ public class GameDemoManager : MonoBehaviour
         inGamePanel.SetActive(true);
         mainMenuPanel.SetActive(false);
         gameOverPanel.SetActive(false);
+
+        bannerAdController.ShowBannerAd(false); // remove bottom banner
     }
 
     void GoToGameOver()
@@ -78,5 +92,10 @@ public class GameDemoManager : MonoBehaviour
         gameOverPanel.SetActive(true);
         inGamePanel.SetActive(true);
         mainMenuPanel.SetActive(false);
+    }
+
+    public void GoToAdTestArea()
+    {
+        SceneManager.LoadSceneAsync("SampleScene", LoadSceneMode.Single);
     }
 }

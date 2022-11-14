@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using GoogleMobileAds.Api;
 
 public class GameManager : MonoBehaviour
@@ -7,5 +8,10 @@ public class GameManager : MonoBehaviour
     {
         // Initialize Google Mobile Ads SDK
         MobileAds.Initialize(initStatus => { });
+    }
+
+    public void GoToDemoGame()
+    {
+        SceneManager.LoadSceneAsync("GameDemo", LoadSceneMode.Single);
     }
 }

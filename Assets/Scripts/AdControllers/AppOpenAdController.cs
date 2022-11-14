@@ -5,7 +5,7 @@ using GoogleMobileAds.Common;
 
 public class AppOpenAdController : MonoBehaviour
 {
-    private AppOpenAd appOpenAd;
+    public AppOpenAd appOpenAd { get; private set; }
 
     private void Start()
     {
